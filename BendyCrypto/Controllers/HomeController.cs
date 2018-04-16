@@ -15,7 +15,7 @@ namespace BendyCrypto.Controllers
 		{
 
 		}
-		public Guid Key { get; set; }
+		public string Key { get; set; }
 		public byte[] PublicKey { get; set; }
 		public bool Used { get; set; }
 	}
@@ -25,10 +25,9 @@ namespace BendyCrypto.Controllers
 		public async Task<ActionResult> Index()
 		{
 			var db = BendyDb.Instance.Database["keys"];
-			var guid = Guid.NewGuid();
-			await db.Upsert(new EncryptionKey() { Key = guid, PublicKey = new byte[0], Used = true });
+			await db.Upsert(new EncryptionKey() { Key = "benji", PublicKey = new byte[0], Used = true });
 			
-			var samekey = await db.RetrieveOne<EncryptionKey>(guid);
+			//var samekey = await db.RetrieveOne<EncryptionKey>(guid);
 
 			//await BendyDb.Instance.Database["keys"].Upsert());
 			return View();

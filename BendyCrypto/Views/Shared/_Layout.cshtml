@@ -11,13 +11,16 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                @Html.ActionLink("Benji's crypto final", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Voting", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                </ul>
-            </div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li>@Html.ActionLink("Home", "Index", "Home")</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="https://github.com/theGerk/Cryptographic-Voting-Demo" target="_blank">GitHub Repo</a></li>
+				</ul>
+			</div>
         </div>
     </div>
     <div class="container body-content">

@@ -1,25 +1,21 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+	ViewBag.Title = "Home Page";
 }
 
 <div class="jumbotron">
-    <h1>Bendy Crypto</h1>
-    <p class="lead">Your ID is <img src="@Url.Action("GetQrCode")" /></p>
-    <p><a class="btn btn-primary btn-lg">Create new key &raquo;</a></p>
+	<h1>Voting demonstration (Step 1)</h1>
 </div>
-@{ 
-	int add(int a, int b)
-	{
-		return a + b;
+<h2>
+	The first step is selecting your ID.
+</h2>
+<p> 
+	The real life analoug to this would be going to the voting place and identifying yourself to the voting authority. <!--TODO: add how this might be done in actual cryptographic implementation-->
+</p>
+
+<h3>Please select your name:</h3>
+
+<div class="list-group">
+	@foreach (string ID in Global.IDs) {
+		<a class=" list-group-item" >@ID</a>
 	}
-}
-@{ 
-	for(int i = 0;i<=10;i++) {
-		for(int j = 0; j < 10;j++) {
-			<p>(@i,@j)</p>
-		}
-	}
-}
-<div class="row">
-    
 </div>
