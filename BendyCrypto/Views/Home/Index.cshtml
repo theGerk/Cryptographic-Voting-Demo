@@ -1,10 +1,9 @@
-﻿@{
+﻿@model IEnumerable<BendyCrypto.Identity>
+@{
 	ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-	<h1>Voting demonstration (Step 1)</h1>
-</div>
+<h1>Voting demonstration</h1>
 <h2>
 	The first step is selecting your ID.
 </h2>
@@ -14,8 +13,23 @@
 
 <h3>Please select your name:</h3>
 
+
 <div class="list-group">
-	@foreach (string ID in Global.IDs) {
-		<a class=" list-group-item" >@ID</a>
+	@foreach (var ident in Model) {
+		<a class="nameSelect list-group-item @(ident.Used ? "disabled" : "")" href="@Url.Action("CryptoVote")/@ident.Key">@ident.Key</a>
 	}
 </div>
+
+<div hidden="hidden">Hello world</div>
+
+@section scripts {
+<script type="text/javascript">
+	
+	@*$('.list-group-item').click(function () {
+
+		$.post('@Url.Action("DoSomething")', "hello world").done(function (response) {
+			alert(response);
+		});
+	});*@
+</script>
+}
