@@ -1,0 +1,12 @@
+{
+  "name": "node-jstester",
+  "version": "0.0.0",
+  "description": "NodeJSTester",
+  "main": "app.js",
+  "author": {
+    "name": "Benji"
+  },
+  "dependencies": {
+    "blind-signatures": "^1.0.4"
+  }
+}

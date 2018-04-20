@@ -10,7 +10,8 @@ namespace BendyCrypto
 		{
 			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
 						"~/Scripts/jquery-{version}.js"));
-
+			bundles.Add(new ScriptBundle("~/bundles/brianRsa").Include("~/Scripts/brainRsa.js").Include("~/Scripts/jsbn.js").Include("~/Scripts/sha3.js").Include("~/Scripts/blind-signature.js"));
+			
 			bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
 						"~/Scripts/jquery.validate*"));
 

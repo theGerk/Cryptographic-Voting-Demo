@@ -1,8 +1,38 @@
 ﻿@model CryptoVoteModel
 @{
-    ViewBag.Title = "CryptoVote";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "CryptoVote";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Welcome @Model.Identity.Key!</h2>
 
+
+<!--Generate public/private RSA key pair for signing-->
+<div id="step2" class="step">
+	<div class="description"></div>
+	<button onclick="step2btnHandler()" class="stepButton">Step 2: Generate an RSA public private key pair</button>
+	<div id="private-key" class="key private-key"></div>
+	<div id="public-key" class="key public-key"></div>
+</div>
+
+
+@section scripts
+{
+	<script type="text/javascript">
+		function step2btnHandler() {
+			window.key = new BrianRSA({ b: 1024 });
+		}
+	</script>
+}
+
+<!--Claim ID by pairing with Key-->
+<!--Make vote (any msg really)-->
+<!--Make commitment of vote-->
+<!--Blind Commitment-->
+<!--Sign blinded commitment-->
+<!--Send blinded commitment, along with it's signature by you along with public key, to be blind validated by authority-->
+<!--Unblind blind signature-->
+<!--Send commitment along with authorities signature to Server-->
+<!--Check to find your commitement on commitment page-->
+<!--Wait for server to end voting time-->
+<!--Decomit and public vote-->

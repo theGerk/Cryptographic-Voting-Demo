@@ -32,9 +32,12 @@ namespace Comptroller
 				}
 				return true;
 			});*/
+			
 			await sdb.Retrieve(null, null, cb => {
 				foreach(var iable in cb) {
-					Console.WriteLine(Encoding.UTF8.GetString(iable.Key));
+
+					Console.WriteLine("Got entity?");
+					Console.WriteLine(Encoding.UTF8.GetString(iable.Key).Substring(6));
 
 				}
 				return true;

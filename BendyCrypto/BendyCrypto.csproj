@@ -178,6 +178,9 @@
     <None Include="Properties\PublishProfiles\bendycrypto - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\BendyCrypto20180414030728 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\brainRsa.js" />
+    <Content Include="Scripts\blind-signature.js" />
+    <Content Include="Scripts\jsbn.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -188,6 +191,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sha3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
