@@ -8,11 +8,13 @@ using BendyCrypto.Models;
 using System.Threading.Tasks;
 using AzureDB;
 using System.IO;
+using System.Security.Cryptography;
+
 namespace BendyCrypto.Controllers
 {
 	public class HomeController : Controller
 	{
-		
+
 		public string ReadRequest()
 		{
 			using(StreamReader mreader = new StreamReader(Request.InputStream)) {
@@ -25,8 +27,12 @@ namespace BendyCrypto.Controllers
 
 		public async Task<ActionResult> CryptoVote(string id)
 		{
-			
-			return View(new CryptoVoteModel() { Identity = await BendyDb.Instance.Database["keys"].RetrieveOne<Identity>(id) });
+			var provider = new RSACryptoServiceProvider();
+			provider.ImportParameters(BendyDb.ServerKey);
+			return View(new CryptoVoteModel() {
+				Identity = await BendyDb.Instance.Database["keys"].RetrieveOne<Identity>(id),
+				ServerKey = provider.ExportParameters(false)
+			});
 		}
 
 		[HttpPost]

@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-
+using System.Numerics;
+using System.Security.Cryptography;
 namespace BendyCrypto
 {
 
 	public class CryptoVoteModel
 	{
 		public Identity Identity { get; set; }
+		public RSAParameters ServerKey { get; set; }
 	}
 
 	public class Identity
@@ -25,6 +27,11 @@ namespace BendyCrypto
 	}
 	public static class Global
 	{
+		public static string toBigIntStr(this byte[] bytes)
+		{
+			return new BigInteger(bytes.Reverse().Concat(new byte[1]).ToArray()).ToString();
+		}
+
 		public static readonly string[] IDs = {
 			"Benjamin Altman",
 			"Brett Graham",

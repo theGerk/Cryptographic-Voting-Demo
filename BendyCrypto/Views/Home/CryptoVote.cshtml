@@ -6,21 +6,72 @@
 
 <h2>Welcome @Model.Identity.Key!</h2>
 
+<div id="keys">
+	<h4>Authority's public RSA key:</h4>
+	<div class="public-key-info">
+		Modulus: <pre class="public-key">@Model.ServerKey.Modulus.toBigIntStr()</pre>
+	</div>
+	<p>Note that the public encryption exponenet will just always be <code>@Model.ServerKey.Exponent.toBigIntStr()</code> for every key, including your own.</p>
+</div>
 
 <!--Generate public/private RSA key pair for signing-->
-<div id="step2" class="step">
-	<div class="description"></div>
-	<button onclick="step2btnHandler()" class="stepButton">Step 2: Generate an RSA public private key pair</button>
-	<div id="private-key" class="key private-key"></div>
-	<div id="public-key" class="key public-key"></div>
-</div>
+<ol class="list-group">
+	<li class="list-group-item">
+		<div class="description">Now the first step is to make an RSA key, so click the button.</div>
+		<p><button onclick="step1btnHandler()" class="stepButton btn">Step 1: Generate your own RSA key</button> Note: This does not talk to the server in any way. All the key generation is done locally on your computer!</p>
+		<ul class="list-group">
+			<li class="list-group-item">Modulus: <pre class="public-key" id="myModulus">Hello world</pre></li>
+			<li class="list-group-item">Prime p: <pre class="private-key" id="myPrimeP"></pre></li>
+			<li class="list-group-item">Prime q: <pre class="private-key" id="myPrimeQ"></pre></li>
+			<li class="list-group-item">Decryption Exponenet: <pre class="private-key" id="myDecryptionExp"></pre></li>
+		</ul>
+	</li>
+
+	<li class="list-group-item">
+		<div class="description">Now the second step is telling the server your public key, only the modulus will be sent the server as it already knows your encryption exponenet to be  <code>@Model.ServerKey.Exponent.toBigIntStr()</code>. The message is sent in plain text and in base 10 so you can confirm that it is your number if you like. This will also stop you from generating new RSA keys</div>
+		<button onclick="step2btnHandler()" class="stepButton btn">Step 2: Tell server your key.</button>
+	</li>
+</ol>
 
 
 @section scripts
 {
 	<script type="text/javascript">
+		function displayMyKey() {
+			$('#myModulus').text(key.keyPair.n.toString());
+			$('#myPrimeP').text(key.keyPair.p.toString());
+			$('#myPrimeQ').text(key.keyPair.q.toString());
+			$('#myDecryptionExp').text(key.keyPair.d.toString())
+		}
+
+
+		function setKey(key) {
+			window.key = key;
+			localStorage.setItem('myKey', key.exportKey());
+			displayMyKey();
+		}
+
+		$(() => {
+			var keyString = localStorage.getItem('myKey');
+			if (keyString === null)
+				return;
+
+			var nodekey = new BrianRSA({ b: 8 });
+			nodekey.importKey(keyString)
+
+			window.key = nodekey;
+			displayMyKey();
+
+
+		});
+
+		function step1btnHandler() {
+			key = new BrianRSA({ b: 1024 });
+			setKey(key);
+		}
+
 		function step2btnHandler() {
-			window.key = new BrianRSA({ b: 1024 });
+			alert("help me brian")//need to call DoSomething function server side
 		}
 	</script>
 }

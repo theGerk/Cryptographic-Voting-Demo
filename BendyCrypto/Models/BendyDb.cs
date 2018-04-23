@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using AzureDB;
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
+using System.Security.Cryptography;
 
 namespace BendyCrypto.Models
 {
@@ -24,8 +26,12 @@ namespace BendyCrypto.Models
 
 	public class BendyDb
 	{
+
+		private static RSAParameters serverKey;
+		public static RSAParameters ServerKey { get => serverKey; }
+
 		static BendyDb bdb;
-		AzureDB.TableDb db;
+		TableDb db;
 		//AzureDB.RangedTableDb rdb;
 		public TableDb Database {
 			get
@@ -62,9 +68,16 @@ namespace BendyCrypto.Models
 
 				db = new TableDb(new ScaledAzureDb(new AzureDatabase[] { new AzureDatabase(System.Configuration.ConfigurationManager.ConnectionStrings["database"].ConnectionString, "doesntmatter") }));
 				/*rdb = new RangedTableDb(new ScaledAzureDb(new AzureDatabase[] { new AzureDatabase(System.Configuration.ConfigurationManager.ConnectionStrings["database"].ConnectionString, "doesntmatter") }));*/
-
-
 			}
+			var oldContext = System.Threading.SynchronizationContext.Current;
+			System.Threading.SynchronizationContext.SetSynchronizationContext(null);
+			KeyEntry check = db["doesntmatter"].RetrieveOne<KeyEntry>(KeyEntry.SERVER_ID).Result;
+			if (check == null) {
+				check = new KeyEntry(new RSACryptoServiceProvider());
+				db["doesntmatter"].Upsert(check);
+			}
+			System.Threading.SynchronizationContext.SetSynchronizationContext(oldContext);
+			serverKey = check.parameters;
 		}
 	}
 }
